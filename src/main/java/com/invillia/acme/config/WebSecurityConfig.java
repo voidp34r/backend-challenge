@@ -53,14 +53,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginPage("/login").permitAll().and().logout().permitAll();
 	}
 
-	@Bean
-	@Override
-	public UserDetailsService userDetailsService() {
-
-		UserDetails user = User.withDefaultPasswordEncoder().username("user").password("akuma172").roles("USER")
-				.build();
-
-		return new InMemoryUserDetailsManager(user);
-	}
-
 }
