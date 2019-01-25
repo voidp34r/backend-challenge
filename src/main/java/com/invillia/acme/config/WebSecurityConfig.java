@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -48,8 +45,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/", "/home", "/login", "/logout").permitAll().antMatchers(AUTH_WHITELIST)
-				.permitAll().antMatchers("/hello").authenticated().antMatchers("/store/").permitAll().and().formLogin()
+		http.authorizeRequests().antMatchers("/", "/signup","/home", "/login", "/logout").permitAll().antMatchers(AUTH_WHITELIST)
+				.permitAll()
+				.antMatchers("/api/users/").hasAnyRole("ADMIN")
+				.antMatchers("/api/users/**").hasAnyRole("ADMIN", "USER")
+				.anyRequest().authenticated()
+				.antMatchers("/hello").authenticated().antMatchers("/store/").permitAll().and().formLogin()
 				.loginPage("/login").permitAll().and().logout().permitAll();
 	}
 
