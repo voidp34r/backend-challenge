@@ -17,6 +17,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private AuthenticationEntryPoint authEntryPoint;
+
 	@Resource(name = "userService")
 	private UserDetailsService userDetailsService;
 
@@ -50,8 +53,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/api/users/").hasAnyRole("ADMIN")
 				.antMatchers("/api/users/**").hasAnyRole("ADMIN", "USER")
 				.anyRequest().authenticated()
-				.antMatchers("/hello").authenticated().antMatchers("/store/").permitAll().and().formLogin()
-				.loginPage("/login").permitAll().and().logout().permitAll();
+				.and().formLogin()
+				.loginPage("/login").permitAll().and().logout().permitAll()
+				.and()
+				.httpBasic()
+				.authenticationEntryPoint(authEntryPoint);
 	}
 
 }
