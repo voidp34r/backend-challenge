@@ -1,18 +1,21 @@
 package com.invillia.acme.models;
 
 import java.time.ZonedDateTime;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="order")
+@Table(name="Orders")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Order {
 	
@@ -29,6 +32,10 @@ public class Order {
 	@Column(name="status")
 	private String status;
 	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@Column(name="item")
+    private Set<OrderItem> item;
+
 	public Integer getId() {
 		return id;
 	}
@@ -59,6 +66,14 @@ public class Order {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Set<OrderItem> getItem() {
+		return item;
+	}
+
+	public void setItem(Set<OrderItem> item) {
+		this.item = item;
 	}
 	
 }
