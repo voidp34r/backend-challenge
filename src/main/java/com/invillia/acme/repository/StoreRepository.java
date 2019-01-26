@@ -9,6 +9,5 @@ import com.invillia.acme.models.Store;
 
 public interface StoreRepository extends CrudRepository<Store, Integer> {
     public Optional<Store> findById(Long id);
-    public List<Store> findByStatus(String status);
     public List<Store> findAll();
 }
