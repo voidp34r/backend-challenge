@@ -1,17 +1,15 @@
 package com.invillia.acme.controllers;
 
-
 import com.invillia.acme.models.MyPayment;
 import com.invillia.acme.repository.PaymentRepository;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-
-
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +39,10 @@ public class PaymentController {
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @RequestMapping(value = "/payments/addpayment", method = RequestMethod.POST)
     public MyPayment addPayment(@RequestBody MyPayment payment) {
-        return paymentRepository.save(payment);
+        LocalDate  dateNow = LocalDate.now();
+        MyPayment newpayment = new MyPayment();
+        newpayment.setPaymentDate(dateNow);
+        return paymentRepository.save(newpayment);
     }
 
     @Secured("ROLE_USER")
@@ -60,9 +61,25 @@ public class PaymentController {
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @RequestMapping(value = "/payments/delete", method = RequestMethod.DELETE)
     public MyPayment deletePayment(@RequestBody MyPayment payment) {
-        MyPayment delStore = paymentRepository.findById(payment.getId()).get();
+        MyPayment delPayment = paymentRepository.findById(payment.getId()).get();
         paymentRepository.delete(paymentRepository.findById(payment.getId()).get());
-        return delStore;
+        return delPayment;
+    }
+
+    @Secured("ROLE_USER")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @RequestMapping(value = "/payments/refund", method = RequestMethod.POST)
+    public String refundPayment(@RequestBody MyPayment payment) {
+        MyPayment refundPayment = paymentRepository.findById(payment.getId()).get();
+        LocalDate date = refundPayment.getPaymentDate();
+        LocalDate  dateNow = LocalDate.now();
+        Period  dateFinal = Period.between(date, dateNow);
+        System.out.println(dateFinal.getYears() + " Anos " + dateFinal.getMonths() + " Meses " + dateFinal.getDays() + " Dias");
+        if (dateFinal.getDays() >= 10) {
+        
+            return "NEGADO!!!!";
+        }
+        return "Reembolso permitido";
     }
 
 }

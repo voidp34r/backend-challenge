@@ -1,6 +1,6 @@
 package com.invillia.acme.models;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,22 +12,22 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="payment")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "payment")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class MyPayment {
-	
+
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
-	
-	@Column(name="status")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+
+	@Column(name = "status")
 	private String status;
-	
-	@Column(name="creditCard")
-	private String creditCard;
-	
-	@Column(name="paymentDate")
-	private ZonedDateTime paymentDate;
+
+	@Column(name = "creditCard")
+	private Integer creditCard;
+
+	@Column(name = "paymentDate")
+	private LocalDate paymentDate;
 	
 	public Integer getId() {
 		return id;
@@ -45,19 +45,19 @@ public class MyPayment {
 		this.status = status;
 	}
 
-	public String getCreditCard() {
+	public Integer getCreditCard() {
 		return creditCard;
 	}
 
-	public void setCreditCard(String creditCard) {
+	public void setCreditCard(Integer creditCard) {
 		this.creditCard = creditCard;
 	}
 
-	public ZonedDateTime getPaymentDate() {
+	public LocalDate getPaymentDate() {
 		return paymentDate;
 	}
 
-	public void setPaymentDate(ZonedDateTime paymentDate) {
+	public void setPaymentDate(LocalDate paymentDate) {
 		this.paymentDate = paymentDate;
 	}
 }

@@ -60,9 +60,9 @@ public class OrderItemController {
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @RequestMapping(value = "/orderitems/delete", method = RequestMethod.DELETE)
     public MyOrderItem deleteOrderItem(@RequestBody MyOrderItem orderitem) {
-        MyOrderItem delStore = orderItemRepository.findById(orderitem.getId()).get();
+        MyOrderItem delOrderItem = orderItemRepository.findById(orderitem.getId()).get();
         orderItemRepository.delete(orderItemRepository.findById(orderitem.getId()).get());
-        return delStore;
+        return delOrderItem;
     }
 
 }
