@@ -12,7 +12,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 @Configuration
 @Profile("dev")
-public class DataConfiguration {
+public class DataConfigurationDev {
 
 	@Bean
     public DataSource dataSource(){
