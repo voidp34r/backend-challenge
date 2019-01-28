@@ -1,6 +1,5 @@
 package com.invillia.acme.config;
 
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -13,13 +12,15 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
 
+	
 	private static final int CACHE_PERIOD = 31556926; // one year
 
 	@Override
 	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/images/**").addResourceLocations("/images/").setCachePeriod(CACHE_PERIOD);
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/").setCachePeriod(CACHE_PERIOD);
-		registry.addResourceHandler("/resources/**/*.js/**").addResourceLocations("/ui/static/");
-		registry.addResourceHandler("/resources/**/*.css/**").addResourceLocations("/ui/static/");
+		registry.addResourceHandler("/js/**/*.js/**").addResourceLocations("/css/").setCachePeriod(CACHE_PERIOD);
+		registry.addResourceHandler("/css/**/*.css/**").addResourceLocations("/js/").setCachePeriod(CACHE_PERIOD);
 	}
 
 	@Override
@@ -39,7 +40,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Override
     public void addFormatters(FormatterRegistry formatterRegistry) {
         // add your custom formatters
-    }
-
+	}
 
 }

@@ -10,9 +10,9 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="orderItem")
+@Table(name="ORDERITEM_TABLE")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class OrderItem {
+public class MyOrderItem {
 	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -58,4 +58,5 @@ public class OrderItem {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
+	
 }
