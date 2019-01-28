@@ -45,9 +45,10 @@ scalability.
 
 ## Nice to have features (describe or implement):
 * Asynchronous processing
-* Database
-* Docker
+* Database  ok
+* Docker  ok
 * AWS
-* Security
-* Swagger
+* Security ok
+* Swagger ok
 * Clean Code
+
